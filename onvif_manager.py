@@ -596,9 +596,9 @@ class ONVIFManagerApp(ctk.CTk):
             widths=(160, 700))
 
         note = ctk.CTkLabel(self.streams_card,
-            text="💡  Copy a URI and open in VLC → Media → Open Network Stream",
+            text="💡  Double-click a URI to copy it  ·  Open in VLC → Media → Open Network Stream",
             font=("Inter", 11), text_color=TEXT_DIM, anchor="w")
-        note.pack(side="bottom", fill="x", padx=8, pady=(0,8))
+        note.grid(row=2, column=0, sticky="ew", padx=12, pady=(0,8))
 
     def _build_events_tab(self):
         tab = self.tabview.tab("Events")
@@ -895,7 +895,7 @@ class ONVIFManagerApp(ctk.CTk):
             except Exception as e:
                 dev["status"] = "error"
                 dev["error"] = str(e)
-                self.after(0, lambda: self._on_connect_error(ip, str(e)))
+                self.after(0, lambda err=str(e): self._on_connect_error(ip, err))
         threading.Thread(target=run, daemon=True).start()
 
     def _prompt_password(self, ip):
